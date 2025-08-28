@@ -7,11 +7,25 @@ class SoftoneBrowser extends Softone
 {
 
     /**
+     * @param $object
+     * @param string $filters
+     * @param string $list
+     * @param $start
+     * @param $limit
+     * @return void
      * @throws \Exception
+     *
+     * Set limit to -1, it will get all the data
+     *
      */
-    public function search($object, $filters='', $list='', $start='',$limit='' ): void
+    public function search($object, string $filters='', string $list='', $start='', $limit='' ): void
     {
         $this->getBrowserInfo($object, $filters, $list);
+
+        if ($limit==-1){
+            $limit = $this->response->totalcount;
+        }
+
         $this->getBrowserData($start, $limit);
     }
 
