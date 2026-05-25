@@ -10,5 +10,7 @@ enum ServiceName: string
     case SetData = "setData";
     case ReportInfo = "getReportInfo";
     case ReportData = "getReportData";
+    case GetSelectorData = "getSelectorData";
+    case SelectorFields  = "selectorFields";
 
 }
