@@ -149,6 +149,42 @@ class Softone implements SoftoneInterface
     private ?string $locateInfo;
 
     /**
+     * Editor key for getSelectorData
+     * @var string|null
+     */
+    private ?string $editor;
+
+    /**
+     * Value for getSelectorData
+     * @var string|null
+     */
+    private ?string $editorValue;
+
+    /**
+     * Table name for selectorFields
+     * @var string|null
+     */
+    private ?string $tableName;
+
+    /**
+     * Key name for selectorFields
+     * @var string|null
+     */
+    private ?string $keyName;
+
+    /**
+     * Key value for selectorFields
+     * @var null|int|string
+     */
+    private null|int|string $keyValue;
+
+    /**
+     * Result fields for selectorFields (comma-separated field names)
+     * @var string|null
+     */
+    private ?string $resultFields;
+
+    /**
      * Requests Body
      * @var array
      */
@@ -540,6 +576,12 @@ class Softone implements SoftoneInterface
             "KEY"           => $this->key ?? null,
             "data"          => $this->data ?? null,
             "LOCATEINFO"    => $this->locateInfo ?? "",
+            "EDITOR"        => $this->editor ?? null,
+            "VALUE"         => $this->editorValue ?? null,
+            "TABLENAME"     => $this->tableName ?? null,
+            "KEYNAME"       => $this->keyName ?? null,
+            "KEYVALUE"      => $this->keyValue ?? null,
+            "RESULTFIELDS"  => $this->resultFields ?? null,
 
         ];
 
@@ -587,6 +629,12 @@ class Softone implements SoftoneInterface
         $this->form         = null;
         $this->key          = null;
         $this->locateInfo   = null;
+        $this->editor       = null;
+        $this->editorValue  = null;
+        $this->tableName    = null;
+        $this->keyName      = null;
+        $this->keyValue     = null;
+        $this->resultFields = null;
 
         $this->setBody();
     }
@@ -728,6 +776,66 @@ class Softone implements SoftoneInterface
         }
 
         return [];
+    }
+
+    /**
+     * Set Editor key (getSelectorData)
+     * @param string $editor
+     * @return void
+     */
+    public function setEditor(string $editor): void
+    {
+        $this->editor = $editor;
+    }
+
+    /**
+     * Set Editor value (getSelectorData)
+     * @param string|null $value
+     * @return void
+     */
+    public function setEditorValue(?string $value): void
+    {
+        $this->editorValue = $value;
+    }
+
+    /**
+     * Set Table name (selectorFields)
+     * @param string $tableName
+     * @return void
+     */
+    public function setTableName(string $tableName): void
+    {
+        $this->tableName = $tableName;
+    }
+
+    /**
+     * Set Key name (selectorFields)
+     * @param string $keyName
+     * @return void
+     */
+    public function setKeyName(string $keyName): void
+    {
+        $this->keyName = $keyName;
+    }
+
+    /**
+     * Set Key value (selectorFields)
+     * @param int|string $keyValue
+     * @return void
+     */
+    public function setKeyValue(int|string $keyValue): void
+    {
+        $this->keyValue = $keyValue;
+    }
+
+    /**
+     * Set Result fields (selectorFields) — comma-separated field names
+     * @param string $resultFields
+     * @return void
+     */
+    public function setResultFields(string $resultFields): void
+    {
+        $this->resultFields = $resultFields;
     }
 
 }

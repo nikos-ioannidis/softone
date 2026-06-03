@@ -80,5 +80,40 @@ class SoftoneBrowser extends Softone
         $this->send();
     }
 
+    /**
+     * Returns data from a Selector of the application.
+     *
+     * @param string $editor  The editor key (e.g. "CUSTOMER")
+     * @param string|null $value  Optional filter value
+     * @return void
+     * @throws \Exception
+     */
+    public function getSelectorData(string $editor, ?string $value = null): void
+    {
+        $this->setService(ServiceName::GetSelectorData->value);
+        $this->setEditor($editor);
+        $this->setEditorValue($value);
+        $this->send();
+    }
+
+    /**
+     * Returns data of specific fields from a table (selector lookup).
+     *
+     * @param string $tableName   Table name (e.g. "CUSTOMER")
+     * @param string $keyName     Key field name (e.g. "CUSTID")
+     * @param int|string $keyValue  Key field value (e.g. 27)
+     * @param string $resultFields  Comma-separated fields to return (e.g. "NAME,AFM")
+     * @return void
+     * @throws \Exception
+     */
+    public function selectorFields(string $tableName, string $keyName, int|string $keyValue, string $resultFields): void
+    {
+        $this->setService(ServiceName::SelectorFields->value);
+        $this->setTableName($tableName);
+        $this->setKeyName($keyName);
+        $this->setKeyValue($keyValue);
+        $this->setResultFields($resultFields);
+        $this->send();
+    }
 
 }
