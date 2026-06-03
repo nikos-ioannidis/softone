@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-    <strong>Disclaimer:</strong> This is not an official package
+    <strong>Disclaimer:</strong> This is not an official package. Forked and extended from <a href="https://github.com/asikam/softone">asikam/softone</a>.
 </p>
 
 ## Table of Contents
@@ -34,21 +34,21 @@ Official Softone Web Services documentation: [https://www.softone.gr/ws/](https:
 
 ## Requirements
 
-- PHP 7.4 or higher
-- Laravel 8.0 or higher
+- PHP 8.2 or higher
+- Laravel 10.0 or higher
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require asikam/softone
+composer require nikos-ioannidis/softone
 ```
 
 After installing, publish the configuration file:
 
 ```bash
-php artisan vendor:publish --provider="Asikam\Softone\SoftoneServiceProvider"
+php artisan vendor:publish --provider="NikosIoannidis\Softone\SoftoneServiceProvider"
 ```
 
 ## Configuration
@@ -74,7 +74,7 @@ SOFTONE_REFID=your_ref_id
 The `SoftoneBrowser` class provides a simplified interface for common operations:
 
 ```php
-use Asikam\Softone\SoftoneBrowser;
+use NikosIoannidis\Softone\SoftoneBrowser;
 
 // Create a new instance
 $softone = new SoftoneBrowser();
@@ -103,7 +103,7 @@ foreach ($softone->responseData as $item) {
 For more control, you can use the core `Softone` class to build your requests:
 
 ```php
-use Asikam\Softone\Softone;
+use NikosIoannidis\Softone\Softone;
 
 // Create a new instance
 $softone = new Softone();
@@ -121,10 +121,24 @@ $softone->limit(10);
 $softone->send();
 
 // Access the response data
-foreach ($softone->data as $item) {
+foreach ($softone->responseData as $item) {
     echo $item['CUSTOMER.NAME'] . "\n";
     echo $item['CUSTOMER.AFM'] . "\n";
 }
+```
+
+### Selector Services
+
+```php
+use NikosIoannidis\Softone\SoftoneBrowser;
+
+$softone = new SoftoneBrowser();
+
+// Get selector data
+$softone->getSelectorData('CUSTOMER', 'search term');
+
+// Get specific fields from a table record
+$softone->selectorFields('CUSTOMER', 'CUSTID', 27, 'NAME,AFM');
 ```
 
 ## Available Methods
@@ -136,6 +150,8 @@ foreach ($softone->data as $item) {
 - `getBrowserInfo($object, $filters, $list)`: Gets browser information for a specific object
 - `getBrowserData($start, $limit)`: Gets browser data with pagination
 - `getData($object, $key)`: Gets data for a specific object with a key
+- `getSelectorData($editor, $value)`: Returns data from a Selector of the application
+- `selectorFields($tableName, $keyName, $keyValue, $resultFields)`: Returns specific fields from a table record
 
 ### Softone Core Methods
 
@@ -159,6 +175,12 @@ The core `Softone` class provides numerous methods for building and sending requ
 - `limit($limit)`: Sets the limit parameter for pagination
 - `setReqId($reqID)`: Sets the request ID for getBrowserData requests
 - `setRequestData($data)`: Sets the request data
+- `setEditor($editor)`: Sets the editor key for getSelectorData
+- `setEditorValue($value)`: Sets the editor value for getSelectorData
+- `setTableName($tableName)`: Sets the table name for selectorFields
+- `setKeyName($keyName)`: Sets the key field name for selectorFields
+- `setKeyValue($keyValue)`: Sets the key field value for selectorFields
+- `setResultFields($resultFields)`: Sets comma-separated result fields for selectorFields
 - `send()`: Sends the request to the Softone Web Services API
 
 ## Examples
@@ -166,7 +188,7 @@ The core `Softone` class provides numerous methods for building and sending requ
 ### Searching for Customers
 
 ```php
-use Asikam\Softone\SoftoneBrowser;
+use NikosIoannidis\Softone\SoftoneBrowser;
 
 $softone = new SoftoneBrowser();
 $softone->search("CUSTOMER", 'CUSTOMER.NAME=*Company*=;');
@@ -182,17 +204,14 @@ foreach ($softone->responseData as $item) {
 ### Getting a Specific Customer by ID
 
 ```php
-use Asikam\Softone\Softone;
+use NikosIoannidis\Softone\SoftoneBrowser;
 
-$softone = new Softone();
-$softone->setService('getData');
-$softone->setObject('CUSTOMER');
-$softone->setKey('1001'); // Customer ID
-$softone->send();
+$softone = new SoftoneBrowser();
+$softone->getData('CUSTOMER', '1001');
 
-$customer = $softone->data;
-echo "Customer Name: " . $customer['NAME'] . "\n";
-echo "Tax ID: " . $customer['AFM'] . "\n";
+$customer = $softone->response;
+echo "Customer Name: " . $customer->NAME . "\n";
+echo "Tax ID: " . $customer->AFM . "\n";
 ```
 
 ## Contributing
@@ -201,6 +220,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This package is open-sourced software licensed under the MIT license.
+This package is open-sourced software licensed under the [MIT license](LICENSE).
 
-For more information on how to use the Softone Web Services, please refer to the [official documentation](https://www.softone.gr/ws/).
+Originally forked from [asikam/softone](https://github.com/asikam/softone).

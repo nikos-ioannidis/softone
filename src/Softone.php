@@ -1,9 +1,9 @@
 <?php
 
-namespace Asikam\Softone;
+namespace NikosIoannidis\Softone;
 
-use Asikam\Softone\Enums\ServiceName;
-use Asikam\Softone\Interfaces\SoftoneInterface;
+use NikosIoannidis\Softone\Enums\ServiceName;
+use NikosIoannidis\Softone\Interfaces\SoftoneInterface;
 use Exception;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;

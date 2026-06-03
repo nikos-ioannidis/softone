@@ -1,6 +1,6 @@
 <?php
 
-namespace Asikam\Softone\Interfaces;
+namespace NikosIoannidis\Softone\Interfaces;
 
 interface SoftoneInterface
 {

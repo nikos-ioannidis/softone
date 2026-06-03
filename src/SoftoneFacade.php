@@ -1,6 +1,6 @@
 <?php
 
-namespace Asikam\Softone;
+namespace NikosIoannidis\Softone;
 use Illuminate\Support\Facades\Facade;
 
 class SoftoneFacade extends Facade

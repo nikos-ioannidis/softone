@@ -1,6 +1,6 @@
 <?php
 
-namespace Asikam\Softone\Enums;
+namespace NikosIoannidis\Softone\Enums;
 
 enum ServiceName: string
 {

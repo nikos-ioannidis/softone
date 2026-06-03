@@ -1,6 +1,6 @@
 {
-    "name": "asikam/softone",
-    "description": "A simple PHP Laravel package to interact with Softone ERP Web Services",
+    "name": "nikos-ioannidis/softone",
+    "description": "A PHP Laravel package to interact with Softone ERP Web Services",
     "keywords": [
         "framework",
         "http",
@@ -8,18 +8,25 @@
         "web service",
         "curl",
         "client",
-        "HTTP client"
+        "HTTP client",
+        "softone",
+        "erp"
     ],
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Asikam\\Softone\\": "src/"
+            "NikosIoannidis\\Softone\\": "src/"
         }
     },
     "authors": [
         {
+            "name": "Nikos Ioannidis",
+            "email": "nikoioan@gmail.com"
+        },
+        {
             "name": "Aggelossik",
-            "email": "a.sykamiotis@gmail.com"
+            "email": "a.sykamiotis@gmail.com",
+            "role": "Original author"
         }
     ],
     "require": {
@@ -29,10 +36,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Asikam\\Softone\\SoftoneServiceProvider"
+                "NikosIoannidis\\Softone\\SoftoneServiceProvider"
             ],
             "aliases": {
-                "Softone": "Asikam\\Softone\\Facade"
+                "Softone": "NikosIoannidis\\Softone\\SoftoneFacade"
             }
         }
     }

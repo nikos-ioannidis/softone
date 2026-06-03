@@ -1,7 +1,7 @@
 <?php
-namespace Asikam\Softone;
+namespace NikosIoannidis\Softone;
 
-use Asikam\Softone\Enums\ServiceName;
+use NikosIoannidis\Softone\Enums\ServiceName;
 
 class SoftoneBrowser extends Softone
 {

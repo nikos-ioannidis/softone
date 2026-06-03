@@ -1,6 +1,6 @@
 <?php
 
-namespace Asikam\Softone;
+namespace NikosIoannidis\Softone;
 use Illuminate\Support\ServiceProvider;
 
 class SoftoneServiceProvider extends ServiceProvider
