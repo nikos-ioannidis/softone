@@ -71,6 +71,12 @@ class Softone implements SoftoneInterface
     protected ?string $clientID;
 
     /**
+     * Saved reqID from getBrowserInfo for use in getBrowserData
+     * @var string|null
+     */
+    protected ?string $browserReqId = null;
+
+    /**
      * Req ID
      *
      * @var string|null
@@ -372,8 +378,8 @@ class Softone implements SoftoneInterface
     public function setFilters(string $filters): void
     {
         if (isset($this->filters)) {
-            $this->filters = $this->filters.'&&'. $filters;
-        }else{
+            $this->filters = $this->filters . '&&' . $filters;
+        } else {
             $this->filters = $filters;
         }
     }
@@ -529,21 +535,19 @@ class Softone implements SoftoneInterface
         $branch     = null,
         $module     = null,
         $refid      = null,
-    )
-    {
+    ) {
         $this->setService('login');
         $this->setUsername($username ?? config('softone.SOFTONE_USER'));
         $this->setPass($password ?? config('softone.SOFTONE_PASS'));
         $this->setAppId($appID ?? config('softone.SOFTONE_APPID'));
-        $this->setCompany( $company ?? config('softone.SOFTONE_COMPANY'));
-        $this->setBranch( $branch ?? config('softone.SOFTONE_BRANCH'));
-        $this->setModule( $module ?? config('softone.SOFTONE_MODULE'));
+        $this->setCompany($company ?? config('softone.SOFTONE_COMPANY'));
+        $this->setBranch($branch ?? config('softone.SOFTONE_BRANCH'));
+        $this->setModule($module ?? config('softone.SOFTONE_MODULE'));
         $this->setRefid($refid ?? config('softone.SOFTONE_REFID'));
 
         $response = $this->send();
 
-        $this->setClientID($response->clientID ?? null );
-
+        $this->setClientID($response->clientID ?? null);
     }
 
     /**
@@ -648,10 +652,9 @@ class Softone implements SoftoneInterface
     public function saveFields(): mixed
     {
 
-        if ( isset($this->response->fields)){
+        if (isset($this->response->fields)) {
 
-            $this->fields = collect(Arr::pluck($this->toArray()['fields'],'name'));
-
+            $this->fields = collect(Arr::pluck($this->toArray()['fields'], 'name'));
         }
 
         return $this->fields ?? null;
@@ -666,18 +669,16 @@ class Softone implements SoftoneInterface
 
     public function combine()
     {
-        if (isset($this->fields) && isset($this->response->rows) ){
+        if (isset($this->fields) && isset($this->response->rows)) {
 
-            foreach ($this->response->rows as $row){
+            foreach ($this->response->rows as $row) {
 
-                if (collect($row)->count() != $this->fields->count()){
+                if (collect($row)->count() != $this->fields->count()) {
                     return false;
                 }
 
-                $this->responseData [] = $this->fields->combine(collect($row));
-
+                $this->responseData[] = $this->fields->combine(collect($row));
             }
-
         }
 
         return $this->responseData ?? null;
@@ -700,9 +701,9 @@ class Softone implements SoftoneInterface
 
         $this->response = json_decode(iconv("windows-1253", "UTF-8//IGNORE", $response->body()));
 
-        if ($response->successful()){
+        if ($response->successful()) {
 
-            switch ($this->service){
+            switch ($this->service) {
                 case ServiceName::BrowserInfo->value:
                     $this->saveFields();
                     break;
@@ -717,14 +718,13 @@ class Softone implements SoftoneInterface
             $this->resetBody();
 
             return $this->response;
-
         }
 
-        if (empty($this->response)){
+        if (empty($this->response)) {
             throw new Exception("Response body is empty");
         }
 
-        if ( !$this->response->success ){
+        if (!$this->response->success) {
             throw new \ErrorException($this->response->error, $this->response->errorcode);
         }
 
@@ -744,11 +744,9 @@ class Softone implements SoftoneInterface
         if (isset($response->fields)) {
 
             $indexes = array_flip(Arr::pluck($response->fields, 'name'));
-
         }
 
         return $indexes[$key] ?? null;
-
     }
 
     /**
@@ -762,17 +760,15 @@ class Softone implements SoftoneInterface
         if (isset($this->response->fields)) {
 
             $indexes = array_flip(Arr::pluck($this->response->fields, 'name'));
-
         }
 
         return $indexes[$key] ?? null;
-
     }
 
     public function toArray(): array
     {
         if (isset($this->response)) {
-            return json_decode(json_encode($this->response),true );
+            return json_decode(json_encode($this->response), true);
         }
 
         return [];
@@ -837,5 +833,4 @@ class Softone implements SoftoneInterface
     {
         $this->resultFields = $resultFields;
     }
-
 }
